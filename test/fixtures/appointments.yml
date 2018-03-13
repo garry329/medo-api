@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  schedule: 2018-03-12 21:33:58
+  user: one
+  doctor: one
+  comments: MyText
+  cancelled: false
+
+two:
+  schedule: 2018-03-12 21:33:58
+  user: two
+  doctor: two
+  comments: MyText
+  cancelled: false

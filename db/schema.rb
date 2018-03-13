@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180311052646) do
+ActiveRecord::Schema.define(version: 20180313023558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "appointments", force: :cascade do |t|
+    t.datetime "schedule"
+    t.bigint "user_id"
+    t.bigint "doctor_id"
+    t.text "comments"
+    t.boolean "cancelled"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
+    t.index ["user_id"], name: "index_appointments_on_user_id"
+  end
 
   create_table "doctors", force: :cascade do |t|
     t.string "provider", default: "email", null: false
@@ -44,6 +56,14 @@ ActiveRecord::Schema.define(version: 20180311052646) do
     t.index ["email"], name: "index_doctors_on_email", unique: true
     t.index ["reset_password_token"], name: "index_doctors_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_doctors_on_uid_and_provider", unique: true
+  end
+
+  create_table "prescriptions", force: :cascade do |t|
+    t.text "description"
+    t.bigint "appointment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_prescriptions_on_appointment_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -81,4 +101,7 @@ ActiveRecord::Schema.define(version: 20180311052646) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "appointments", "doctors"
+  add_foreign_key "appointments", "users"
+  add_foreign_key "prescriptions", "appointments"
 end
