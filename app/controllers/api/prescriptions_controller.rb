@@ -4,7 +4,6 @@ class Api::PrescriptionsController < ApplicationController
   # GET /prescriptions
   def index
     @prescriptions = Prescription.all
-
     render json: @prescriptions
   end
 
